@@ -1,4 +1,5 @@
-# Business Overview
+# RiskBeacon
+## Business Overview
 
 Project Overview
 -------------------------------------------------------
@@ -22,60 +23,4 @@ Di sisi lain, koperasi dihadapkan pada **trade-off antara risiko dan keuntungan*
 
 Business Objective
 -------------------------------------------------------
-
-
-
-
-
-
-
-Tujuan :meminimalkan kerugian akibat gagal bayar, sambil tetap memberikan kredit kepada orang-orang baik (lancar).
-
-Dulu, petugas kredit (analis) mungkin memutuskan berdasarkan "feeling" atau aturan sederhana (misal: "Gaji di atas 5 juta pasti aman"). Ini subjektif dan seringkali salah.
-
-Cara bank menilai sebuah nasabah : 5C of Credit
--------------------------------------------------------
-
-Pertanyaan bisnis penting:
-
-- Segment mana yang paling berisiko?
-- Faktor apa yang paling mempengaruhi default?
-- Berapa potensi kerugian jika salah approve?
-- Bagaimana strategi mengurangi risiko?
-
--------------------------------------------------------
-
-Problem Reference :
-
-*https://www.tempo.co/ekonomi/anggota-koperasi-melania-masih-berjuang-bongkar-dugaan-penggelapan-uang-rp-210-miliar-2064084
---> Kredit macet 87% dari total aset
-
-*https://regional.kompas.com/read/2025/09/09/153304878/kehilangan-rumah-usai-pinjam-rp-20-juta-di-koperasi-demak-hadi-punya-satu#
---> anggota gagal bayar 20jt, rumah disita koperasi
-
-*https://duta.co/komisi-ii-dprd-probolinggo-bongkar-akar-masalah-gagal-bayar-di-kpri-perkasa-dringu
--->KPRI Perkasa Dringu
-
-*Menunggak Utang Rp19 Juta, Pegawai Koperasi Dikurung Selama 5 Hari | Liputan 6 (https://www.youtube.com/watch?v=J2-U59WHvAY)
-
-*Viral Video Nasabah Ogah Bayar Utang, Minta Dicium Karyawan Koperasi Baru Mau |Tribun Medan (https://www.youtube.com/watch?v=5WefK_r9hE0&t=21s)
-
--------------------------------------------------------
-
-Objektif :
 Analisis dan Model yang kami bangun merepresentasikan prinsip 5C of Credit yang umum digunakan baik di perbankan maupun koperasi, dengan pendekatan berbasis data historis untuk meningkatkan objektivitas dalam penilaian kredit.
-
--------------------------------------------------------
-
-5C pada dataset 'Give Me Some Credit' :
-
-Character : number of time * DPD
-
-Capacity : Monthly Income, DebtRatio, Number of open credit
-
-Capital : Number of dependants ( > tanggungan = < asset)
-
-Collateral : number real estates loans or lines
-
-Conditions : -
-"# p2-ftds-final-project-ftds-037-hck-group-001" 
