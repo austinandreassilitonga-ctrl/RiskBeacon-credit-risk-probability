@@ -1,81 +1,74 @@
-# Business Overview
+# Final Project From Excel (Airflow DAG + Local Excel)
 
-Project Overview
--------------------------------------------------------
-**RiskBeacon** merupakan sebuah sistem analisis dan pemodelan credit scoring yang dirancang untuk membantu institusi keuangan, khususnya koperasi simpan pinjam, dalam menilai kelayakan kredit secara lebih objektif dan terukur. Sistem ini dibangun dengan merepresentasikan prinsip 5C of Credit : **Character, Capacity, Capital, Collateral, dan Condition** ke dalam pendekatan berbasis data historis. Dengan memanfaatkan variabel-variabel kuantitatif seperti pendapatan, rasio utang, serta riwayat keterlambatan pembayaran, **RiskBeacon** mampu menghasilkan estimasi risiko individu dalam bentuk probability of default dan credit score yang mudah dipahami oleh pengambil keputusan.
+Project ini mengadopsi struktur Streamlit dari `hck-037-final_project`, lalu konsep data pipeline diubah jadi lokal berbasis Excel.
 
-Permasalahan utama yang ingin diselesaikan oleh RiskBeacon terletak pada aspek **Character**, yang dalam praktik koperasi masih sering dinilai secara subjektif berdasarkan reputasi sosial atau kedekatan lingkungan. Pendekatan ini berpotensi menimbulkan bias dan ketidakkonsistenan dalam pengambilan keputusan kredit, sehingga meningkatkan risiko kesalahan dalam menilai anggota. RiskBeacon hadir untuk mengatasi keterbatasan tersebut dengan menggantikan penilaian subjektif menjadi evaluasi berbasis data, sehingga setiap keputusan didasarkan pada pola historis dan indikator risiko yang terukur.
+- Input source lokal (`.csv` atau `.xlsx`)
+- Output raw dari DAG: `data/raw_cs_training.xlsx`
+- Output cleaned dari DAG: `data/cleaned_cs_training.xlsx`
+- Validasi data dari DAG: `data/gx/cleaned_cs_training_validation.json`
+- Serving: Streamlit app membaca cleaned Excel yang sama
 
-Dari sisi bisnis, RiskBeacon ditargetkan mampu menyeimbangkan antara pengurangan risiko gagal bayar dan optimalisasi penyaluran kredit kepada debitur yang layak. Dengan adanya segmentasi risiko yang jelas (low, medium, high), koperasi dapat menerapkan strategi pemberian kredit yang lebih tepat, seperti penyesuaian limit atau kebijakan persetujuan. Dampak yang diharapkan adalah peningkatan kualitas portofolio pinjaman, penurunan tingkat kredit macet, serta terciptanya sistem pengambilan keputusan yang lebih konsisten, transparan, dan berkelanjutan.
+Airflow tetap dipakai sebagai orkestrasi ETL, tetapi tidak ada koneksi SQL raw/datamart.
 
-Business Problem
--------------------------------------------------------
-Koperasi simpan pinjam sering menghadapi **tingginya default rate** yang berdampak langsung pada kerugian finansial dan terganggunya arus kas. Hal ini diperparah oleh proses approval kredit tanpa risk control yang jelas, sehingga meningkatkan potensi **bad debt**. Selain itu, masih terdapat ketidakkonsistenan dalam pengambilan keputusan, di mana anggota dengan kondisi finansial serupa dapat memperoleh hasil berbeda akibat penilaian yang subjektif, terutama pada aspek karakter.
+## Struktur Utama
 
-Di sisi lain, koperasi dihadapkan pada **trade-off antara risiko dan keuntungan**. Pendekatan yang terlalu restriktif memang lebih aman namun menurunkan potensi revenue, sedangkan pendekatan yang terlalu agresif dapat meningkatkan penyaluran kredit tetapi dengan risiko gagal bayar yang lebih tinggi. Fenomena ini tercermin dalam berbagai kasus nyata, seperti anggota yang kehilangan aset akibat gagal bayar pinjaman kecil, permasalahan kredit macet di koperasi daerah, hingga kasus ekstrem penagihan utang yang tidak manusiawi. Referensi kasus:
+- `dags/credit_risk_excel_etl.py` -> DAG Airflow `extract -> transform -> validate`
+- `pipeline/airflow_tasks.py` -> callable Python task untuk DAG Airflow
+- `pipeline/extract_excel.py` -> extract source tabular ke raw Excel
+- `pipeline/transform_excel.py` -> cleaning, rename, dedup, feature engineering
+- `pipeline/run_pipeline.py` -> runner manual (opsional, non-Airflow)
+- `deployment/src/` -> halaman Streamlit (Home, Prediction, EDA, Pipeline)
+- `deployment/artifacts/` -> model artifacts (`best_lgbm.pkl`, transformer, metadata)
 
-[Anggota Gagal Bayar 20jt, Rumah Disita Koperasi](https://regional.kompas.com/read/2025/09/09/153304878/kehilangan-rumah-usai-pinjam-rp-20-juta-di-koperasi-demak-hadi-punya-satu#)
+## Setup
 
-[Kredit Macet 87% dari Total Aset](https://www.tempo.co/ekonomi/anggota-koperasi-melania-masih-berjuang-bongkar-dugaan-penggelapan-uang-rp-210-miliar-2064084)
+```bash
+pip install -r requirements.txt
+```
 
-[Menunggak Utang Rp19 Juta, Pegawai Koperasi Dikurung Selama 5 Hari | Liputan 6](https://www.youtube.com/watch?v=J2-U59WHvAY)
+## Jalankan Dengan Airflow (Rekomendasi)
 
-Business Objective
--------------------------------------------------------
+```bash
+docker compose up -d
+```
 
+Lalu akses:
 
+- Airflow: `http://localhost:8081` (`admin/admin`)
+- Streamlit: `http://localhost:8501`
 
+Di Airflow UI, trigger DAG:
 
+- `credit_risk_excel_etl`
 
+Setelah DAG selesai, file `data/cleaned_cs_training.xlsx` akan di-update oleh task DAG.
 
+## Jalankan Pipeline Manual (Opsional)
 
-Tujuan :meminimalkan kerugian akibat gagal bayar, sambil tetap memberikan kredit kepada orang-orang baik (lancar).
+Jika ingin tanpa Airflow, masih bisa:
 
-Dulu, petugas kredit (analis) mungkin memutuskan berdasarkan "feeling" atau aturan sederhana (misal: "Gaji di atas 5 juta pasti aman"). Ini subjektif dan seringkali salah.
+```bash
+python pipeline/run_pipeline.py
+```
 
-Cara bank menilai sebuah nasabah : 5C of Credit
--------------------------------------------------------
+Jika source file berbeda:
 
-Pertanyaan bisnis penting:
+```bash
+python pipeline/run_pipeline.py --source path/to/source_file.csv
+```
 
-- Segment mana yang paling berisiko?
-- Faktor apa yang paling mempengaruhi default?
-- Berapa potensi kerugian jika salah approve?
-- Bagaimana strategi mengurangi risiko?
+## Catatan Source Data
 
--------------------------------------------------------
+Source default untuk DAG ada di:
 
-Problem Reference :
+- `data/source/cs-training.csv`
 
-*https://www.tempo.co/ekonomi/anggota-koperasi-melania-masih-berjuang-bongkar-dugaan-penggelapan-uang-rp-210-miliar-2064084
---> Kredit macet 87% dari total aset
+Path ini bisa diubah via env var `SOURCE_FILE_PATH` pada service Airflow di `docker-compose.yml`.
 
-*https://regional.kompas.com/read/2025/09/09/153304878/kehilangan-rumah-usai-pinjam-rp-20-juta-di-koperasi-demak-hadi-punya-satu#
---> anggota gagal bayar 20jt, rumah disita koperasi
+## Jalankan Streamlit Saja (Opsional)
 
-*https://duta.co/komisi-ii-dprd-probolinggo-bongkar-akar-masalah-gagal-bayar-di-kpri-perkasa-dringu
--->KPRI Perkasa Dringu
+```bash
+streamlit run deployment/src/streamlit_app.py
+```
 
-*Menunggak Utang Rp19 Juta, Pegawai Koperasi Dikurung Selama 5 Hari | Liputan 6 (https://www.youtube.com/watch?v=J2-U59WHvAY)
-
-*Viral Video Nasabah Ogah Bayar Utang, Minta Dicium Karyawan Koperasi Baru Mau |Tribun Medan (https://www.youtube.com/watch?v=5WefK_r9hE0&t=21s)
-
--------------------------------------------------------
-
-Objektif :
-Analisis dan Model yang kami bangun merepresentasikan prinsip 5C of Credit yang umum digunakan baik di perbankan maupun koperasi, dengan pendekatan berbasis data historis untuk meningkatkan objektivitas dalam penilaian kredit.
-
--------------------------------------------------------
-
-5C pada dataset 'Give Me Some Credit' :
-
-Character : number of time * DPD
-
-Capacity : Monthly Income, DebtRatio, Number of open credit
-
-Capital : Number of dependants ( > tanggungan = < asset)
-
-Collateral : number real estates loans or lines
-
-Conditions : -
-"# p2-ftds-final-project-ftds-037-hck-group-001" 
+Lalu buka `http://localhost:8501`.
