@@ -171,17 +171,6 @@ Temuan utama dari EDA:
 - **DebtRatio** memiliki outlier signifikan yang memerlukan pemotongan berbasis IQR
 - **MonthlyIncome** memiliki ~20% missing value — diimputasi menggunakan median per kelompok usia
 
-### WoE & IV — Seleksi Fitur
-
-Interpretasi Information Value (IV) yang digunakan untuk seleksi fitur:
-
-| Nilai IV | Interpretasi |
-|---|---|
-| < 0,02 | Tidak berguna — dikeluarkan dari model |
-| 0,02 – 0,1 | Lemah |
-| 0,1 – 0,3 | Cukup kuat |
-| 0,3 – 0,5 | Kuat |
-| > 0,5 | Sangat kuat (periksa potensi data leakage) |
 
 ---
 
@@ -213,6 +202,9 @@ LightGBM dipilih karena performa unggulnya pada data tabular yang tidak seimbang
 | 0,60 – 0,75 | Sangat bagus |
 | > 0,75 | Sangat tinggi — validasi potensi overfitting |
 
+
+Nilai KS-Statistic : 0.58
+
 ---
 
 ## Simulasi Dampak Bisnis
@@ -235,9 +227,9 @@ Threshold PD Score ditentukan dari titik cut-off optimal KS-Statistic dan distri
 
 | Segmen Risiko | PD Score | Keputusan Kredit | Limit |
 |---|---|---|---|
-| 🟢 **Low Risk** | < 0,10 | Disetujui | Limit tinggi — suku bunga standar |
-| 🟡 **Medium Risk** | 0,10 – 0,30 | Disetujui dengan review | Limit moderat — review manual oleh petugas |
-| 🔴 **High Risk** | ≥ 0,30 | Ditolak | Tidak ada kredit — rujukan edukasi keuangan |
+| 🟢 **Low Risk** | < 0,43 | Disetujui | Limit tinggi — suku bunga standar |
+| 🟡 **Medium Risk** | 0,43 – 0,58 | Disetujui dengan review | Limit moderat — review manual oleh petugas |
+| 🔴 **High Risk** | ≥ 0,58 | Ditolak | Tidak ada kredit — rujukan edukasi keuangan |
 
 > Catatan: Threshold dikalibrasi berdasarkan tingkat gagal bayar portofolio (~6,7%) dan titik pemisahan optimal KS-Statistic. Threshold ini bukan konstanta tetap — rekalibrasi disarankan ketika diterapkan pada populasi peminjam baru.
 
@@ -280,7 +272,7 @@ Threshold PD Score ditentukan dari titik cut-off optimal KS-Statistic dan distri
 | **Explainability** | SHAP |
 | **Penanganan Imbalance** | Imbalanced-learn (SMOTE) |
 | **Evaluasi** | Metrik Scikit-learn, KS-Statistic |
-| **Penyimpanan** | PostgreSQL / CSV / S3-compatible |
+| **Penyimpanan** | PostgreSQL / CSV |
 | **Visualisasi** | Matplotlib, Seaborn |
 | **Version Control** | Git, GitHub |
 
