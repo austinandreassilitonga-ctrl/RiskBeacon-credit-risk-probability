@@ -292,11 +292,11 @@ Threshold PD Score ditentukan dari titik cut-off optimal KS-Statistic dan distri
 
 | Nama | Peran |
 |---|---|
-| [Austin Silitonga] | Lead Project — Business Understanding |
-| [Hernanda Rifaldi] | Data Engineer — ETL Pipeline & Airflow |
-| [Kesyia Patty] | Data Analyst — EDA & Business Insight |
-| [M.Nabil] | Data Scientist — Feature Engineering & Modeling |
-| [Rezha Aulia] | Data Scientist — SHAP & KS-Statistic |
+| Austin Silitonga | Lead Project — Business Understanding |
+| Hernanda Rifaldi | Data Engineer — ETL Pipeline & Airflow |
+| Kesyia Patty | Data Analyst — EDA & Business Insight |
+| M.Nabil | Data Scientist — Feature Engineering & Modeling |
+| Rezha Aulia | Data Scientist — SHAP & KS-Statistic |
 
 ---
 
