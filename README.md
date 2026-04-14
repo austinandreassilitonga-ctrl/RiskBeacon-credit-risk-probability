@@ -18,7 +18,6 @@
 - [Logika Keputusan Kredit](#logika-keputusan-kredit)
 - [Struktur Proyek](#struktur-proyek)
 - [Teknologi yang Digunakan](#teknologi-yang-digunakan)
-- [Cara Menjalankan](#cara-menjalankan)
 - [Tim](#tim)
 - [Referensi](#referensi)
 
@@ -54,7 +53,7 @@ Seiring institusi keuangan — dari bank hingga koperasi simpan pinjam — terus
 
 Khususnya dalam konteks **Koperasi Simpan Pinjam**, dimensi `Character` pada penilaian 5C kredit masih sangat bergantung pada reputasi sosial — bukan berasal dari data atau angka. Hal ini menciptakan blind spot yang dirancang khusus untuk diatasi oleh RiskBeacon.
 
-> *"Sebelum RiskBeacon diterapkan, tingkat gagal bayar aktual sebesar 6,7% dari 150.000 data peminjam tidak terdeteksi pada level individu. Setelah model prediktif diterapkan pada 80.000 data peminjam yang berbeda, RiskBeacon mengidentifikasi 28,5% pemohon sebagai berindikasi gagal bayar — mengungkap risiko tersembunyi yang sebelumnya akan lolos tanpa pengawasan."*
+> *"Sebelum RiskBeacon diterapkan, tingkat gagal bayar aktual sebesar 6,7% dari 150.000 data peminjam tidak terdeteksi pada level individu. Setelah model prediktif diterapkan pada 100.000 data peminjam yang berbeda, RiskBeacon mengidentifikasi 28,5% pemohon sebagai berindikasi gagal bayar — mengungkap risiko tersembunyi yang sebelumnya akan lolos tanpa pengawasan."*
 
 ---
 
@@ -220,11 +219,11 @@ LightGBM dipilih karena performa unggulnya pada data tabular yang tidak seimbang
 
 | | Sebelum (Baseline) | Sesudah (Model Diterapkan) |
 |---|---|---|
-| Populasi | 150.000 data peminjam | 80.000 data peminjam |
+| Populasi | 150.000 data peminjam | 100.000 data peminjam |
 | Tingkat gagal bayar | 6,7% (aktual) | 28,5% (prediksi) |
 | Interpretasi | Distribusi nyata di data training | Model mengungkap risiko tersembunyi di populasi baru |
 
-> *Sebelum: distribusi gagal bayar aktual dari data training (n=150.000). Sesudah: hasil prediksi model pada populasi peminjam baru yang belum pernah dilihat sebelumnya (n=80.000). Tingginya prediksi gagal bayar mencerminkan kemampuan model dalam mengidentifikasi pola risiko yang tidak terlihat melalui penilaian manual.*
+> *Sebelum: distribusi gagal bayar aktual dari data training (n=150.000). Sesudah: hasil prediksi model pada populasi peminjam baru yang belum pernah dilihat sebelumnya (n=100.000). Tingginya prediksi gagal bayar mencerminkan kemampuan model dalam mengidentifikasi pola risiko yang tidak terlihat melalui penilaian manual.*
 
 **Estimasi dampak finansial**: Dari populasi 80.000 peminjam, RiskBeacon mengidentifikasi ~22.800 pemohon berisiko tinggi. Dengan asumsi rata-rata pinjaman Rp 5.000.000, penolakan proaktif berpotensi mencegah estimasi kerugian hingga **Rp 114 miliar** dari kredit bermasalah.
 
@@ -276,7 +275,7 @@ Threshold PD Score ditentukan dari titik cut-off optimal KS-Statistic dan distri
 |---|---|
 | **Orkestrasi** | Apache Airflow |
 | **Pemrosesan Data** | Python, Pandas, NumPy |
-| **Feature Engineering** | Scikit-learn, WoE/IV (custom) |
+| **Feature Engineering** | Scikit-learn, Weight of Evidence (custom) |
 | **Pemodelan** | LightGBM |
 | **Explainability** | SHAP |
 | **Penanganan Imbalance** | Imbalanced-learn (SMOTE) |
@@ -287,59 +286,17 @@ Threshold PD Score ditentukan dari titik cut-off optimal KS-Statistic dan distri
 
 ---
 
-## Cara Menjalankan
-
-### 1. Clone repositori
-
-```bash
-git clone https://github.com/FTDS-assignment-bay/p2-ftds-final-project-ftds-037-hck-group-001.git
-cd p2-ftds-final-project-ftds-037-hck-group-001
-```
-
-### 2. Install dependensi
-
-```bash
-pip install -r requirements.txt
-```
-
-### 3. Jalankan pipeline ETL (Airflow)
-
-```bash
-# Inisialisasi database Airflow
-airflow db init
-
-# Jalankan webserver dan scheduler Airflow
-airflow webserver --port 8080
-airflow scheduler
-
-# Trigger DAG melalui UI atau CLI
-airflow dags trigger etl_pipeline
-```
-
-### 4. Jalankan notebook secara berurutan
-
-```bash
-jupyter notebook notebooks/
-```
-
-Urutan eksekusi:
-1. `01_eda.ipynb`
-2. `02_feature_engineering.ipynb`
-3. `03_modeling.ipynb`
-4. `04_shap_explainability.ipynb`
-
----
-
 ## Tim
 
 **FTDS Batch 037 — Hacktiv8 | Group 001**
 
 | Nama | Peran |
 |---|---|
-| [Nama Anggota 1] | Data Engineer — ETL Pipeline & Airflow |
-| [Nama Anggota 2] | Data Analyst — EDA & Feature Engineering |
-| [Nama Anggota 3] | Data Scientist — Pemodelan & Evaluasi |
-| [Nama Anggota 4] | Data Scientist — SHAP & Business Insight |
+| [Austin Silitonga] | Lead Project — Business Understanding |
+| [Hernanda Rifaldi] | Data Engineer — ETL Pipeline & Airflow |
+| [Kesyia Patty] | Data Analyst — EDA & Business Insight |
+| [M.Nabil] | Data Scientist — Feature Engineering & Modeling |
+| [Rezha Aulia] | Data Scientist — SHAP & KS-Statistic |
 
 ---
 
