@@ -1,22 +1,46 @@
-Project: Analisis Risiko Kredit
+# Business Insight Summary
+## Project: Credit Risk Analysis — RiskBeacon
 
-1. Summary: Default Overview
-Analisis ini mengidentifikasi pola kritis yang membedakan nasabah "Lancar" dan "Gagal Bayar". Berdasarkan dataset 150.000 entri, ditemukan bahwa perilaku historis dan beban finansial merupakan prediktor yang signifikan secara statistik.
+---
 
-Temuan Kunci: Kelompok nasabah dengan data anomali pada frekuensi keterlambatan (kategori "Unknown") memiliki Default Rate tinggi (~60%). Hal ini membuktikan bahwa anomali input seringkali menjadi indikator adanya risiko tersembunyi yang tidak terlaporkan.
+### 1. Default Overview
 
-2. Risk Patterns & Business Insights
+This analysis identifies key patterns that differentiate **"Current"** (non-defaulting) borrowers from **"Default"** borrowers. Based on a dataset of 150,000 entries, we found that historical payment behavior and financial burden are statistically significant predictors of default.
 
-A. Behavioral Risk (The "Red Flags")
+**Key Finding:** Borrowers with anomalous data in their delinquency frequency — categorized as "Unknown" — show a notably high default rate (~60%). This confirms that data anomalies in borrower records often serve as a hidden risk indicator that goes unreported under normal assessment.
 
-Extreme Delay: Nasabah dengan riwayat keterlambatan pembayaran menunjukkan korelasi yang sangat kuat dengan risiko gagal bayar. Frekuensi keterlambatan lebih dari 6 kali hampir memastikan terjadinya default di masa depan (risiko mencapai >60%).
+---
 
-Utilization Stress: Nasabah yang menggunakan limit kredit hingga kapasitas penuh (Very High Utilization) memiliki risiko default 3x lebih tinggi dari rata-rata. Ini menunjukkan ketergantungan pada utang untuk arus kas sehari-hari (over-leveraged).
+### 2. Risk Patterns & Business Insights
 
-B. Customer Profile & Capacity
+#### A. Behavioral Risk — The "Red Flags"
 
-Age Profile: Terdapat korelasi terbalik antara usia dan risiko; kelompok usia muda (<30 tahun) menunjukkan profil risiko paling tinggi (~12%).
+**Extreme Delay:**
+Borrowers with a history of repeated late payments show a very strong correlation with default risk. Delinquency frequency above 6 times almost guarantees a future default, with risk reaching above 60%. This is the strongest individual predictor in the dataset.
 
-Financial Burden: Terdapat tren meningkat pada variabel tanggungan (dependents). Risiko default cenderung naik seiring bertambahnya beban finansial rumah tangga, dengan titik risiko tertinggi pada nasabah dengan 6 tanggungan.
+**Utilization Stress:**
+Borrowers who use their credit limit to near-full capacity (Very High Utilization) have a default risk that is approximately **3× higher than the average**. This pattern suggests these borrowers are relying on credit to cover day-to-day cash flow needs — a condition known as being **over-leveraged**.
 
-Income Capacity: Nasabah dengan kategori pendapatan "Low" memiliki kerentanan lebih tinggi dibandingkan nasabah berpendapatan tinggi, yang memperkuat pengaruh kapasitas ekonomi terhadap kepatuhan pembayaran.
+---
+
+#### B. Customer Profile & Capacity
+
+**Age Profile:**
+There is a clear inverse relationship between age and default risk. The youngest age group (under 30 years old) shows the highest risk profile at approximately **12% default rate**. This is likely because younger borrowers tend to have shorter credit histories and less financial stability.
+
+**Financial Burden:**
+Default risk tends to rise as the number of financial dependents increases. The highest risk point is observed for borrowers with **6 dependents**, suggesting that a heavier household financial burden significantly reduces a borrower's ability to keep up with loan payments.
+
+**Income Capacity:**
+Borrowers in the **"Low" income category** are more vulnerable compared to those with higher income. This reinforces the role of economic capacity as a key factor in determining repayment discipline and loan reliability.
+
+---
+
+### 3. Summary
+
+The three most influential factors for predicting default in this dataset are:
+1. **Payment behavior** — frequency of late payments (especially 90+ days)
+2. **Credit utilization** — how much of the credit limit is being used
+3. **Household burden** — number of financial dependents
+
+These findings align with the **5C of Credit** framework used as the foundation of this project, particularly the **Character** (payment history) and **Capacity** (income vs. debt load) dimensions.
