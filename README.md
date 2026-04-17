@@ -284,8 +284,6 @@ Threshold PD Score ditentukan dari titik cut-off optimal KS-Statistic dan distri
 
 ## Tim
 
-**FTDS Batch 037 — Hacktiv8 | Group 001**
-
 | Nama | Peran |
 |---|---|
 | Austin Silitonga | Lead Project — Business Understanding |
