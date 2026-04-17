@@ -283,22 +283,15 @@ PD Score thresholds are determined from the KS-Statistic optimal cut-off point a
 
 ## Team
 
-<<<<<<< HEAD
-**FTDS Batch 037 — Hacktiv8 | Group 001**
-
 | Name | Role |
-=======
-| Nama | Peran |
->>>>>>> 163fb77386cb27363979965d2061f50dc0111997
 |---|---|
 | Austin Silitonga | Lead Project — Business Understanding |
 | Hernanda Rifaldi | Data Engineer — ETL Pipeline & Airflow |
 | Kesyia Patty | Data Analyst — EDA & Business Insight |
-| M. Nabil | Data Scientist — Feature Engineering & Modeling |
+| M.Nabil | Data Scientist — Feature Engineering & Modeling |
 | Rezha Aulia | Data Scientist — SHAP & KS-Statistic |
 
 ---
-
 ## References
 
 - Give Me Some Credit Dataset — [Kaggle](https://www.kaggle.com/datasets/brycecf/give-me-some-credit-dataset)
