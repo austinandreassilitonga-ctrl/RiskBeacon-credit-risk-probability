@@ -1,4 +1,4 @@
-# RiskBeacon — Automated Credit Risk Scoring Pipeline with Predictive Analytics and Real-Time Monitoring
+# RiskBeacon — Automated Credit Risk Probability Pipeline with Predictive Analytics and Real-Time Monitoring
 
 > **Minimizing losses from loan defaults, while ensuring creditworthy members still receive the access they deserve.**
 
