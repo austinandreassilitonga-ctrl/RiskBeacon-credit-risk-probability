@@ -240,25 +240,10 @@ PD Score thresholds are determined from the KS-Statistic optimal cut-off point a
 ## Project Structure
 
 ```
-├── dags/                              # Apache Airflow DAG files
-│   └── etl_pipeline.py
-├── notebooks/
-│   ├── EDA1.ipynb                     # Exploratory Data Analysis
-│   ├── final_project.ipynb            # Feature Engineering & Modeling
-│   └── final_project_inference.ipynb  # Model Inference & Credit Decision
-├── src/
-│   ├── preprocessing.py
-│   ├── feature_selection.py           # WoE + IV
-│   └── model.py
-├── data/
-│   ├── raw/                           # cs-training.csv
-│   └── processed/
-├── outputs/
-│   ├── model/                         # Saved LightGBM model
-│   └── reports/                       # Evaluation metrics, SHAP plots
-├── Business_Overview.md
-├── Business_insight_summary.md
-├── requirements.txt
+├── Business Understanding/            # Business Overview and Flowchart
+├── Data Analyst/                      # Exploratory Data Analysis and Business Insight
+├── Data Engineer/                     # Apache Airflow DAG files
+├── Data Scientist/                    # Modeling and Evaluations
 └── README.md
 ```
 
