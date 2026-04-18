@@ -2,7 +2,9 @@
 
 > **Minimizing losses from loan defaults, while ensuring creditworthy members still receive the access they deserve.**
 
-<img src="./img/logo.png" alt="Logo" width="400" height="400">
+<div align="center">
+  <img src="./img/logo.png" alt="Logo" width="400" height="400">
+</div>
 
 ---
 
